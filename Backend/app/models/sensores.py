@@ -1,4 +1,4 @@
-"""ORM model for the SENSORS table."""
+"""Clase/modelo que representa la tabla SENSORS en la base de datos, usando ORM (objeto-relacional)."""
 
 import datetime
 from sqlalchemy import Column, Integer, String, Date, DateTime, CheckConstraint

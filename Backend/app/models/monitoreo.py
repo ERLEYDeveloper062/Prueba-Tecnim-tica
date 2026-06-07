@@ -1,4 +1,5 @@
-"""ORM model for MONITORINGS — tabla puente M:N con atributos propios (sensor ↔ zone)."""
+"""MONITORINGS es una tabla que conecta sensores con zonas (muchos a muchos) 
+y también guarda información propia de esa conexión."""
 
 import datetime
 from sqlalchemy import (

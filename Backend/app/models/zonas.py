@@ -1,4 +1,4 @@
-"""ORM model for the ZONES table."""
+"""Clase/modelo que representa la tabla ZONES en la base de datos, usando ORM (mapeo objeto-relacional)."""
 
 import datetime
 from sqlalchemy import Column, Integer, String, DateTime, CheckConstraint

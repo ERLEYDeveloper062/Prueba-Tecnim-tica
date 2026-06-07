@@ -1,15 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import { getZonas, getMonitoreos, getSensores } from '../api/api'
 
 const BADGE_ZONA = {
   activo:        'badge badge-activo-op',
   inactivo:      'badge badge-inactivo',
   mantenimiento: 'badge badge-mantenimiento',
-}
-
-// Lectura simulada determinista: varía entre ~55 % y ~145 % del umbral
-function lecturaSimulada(id, umbral) {
-  return +( umbral * (0.55 + (id * 17 % 90) / 100) ).toFixed(2)
 }
 
 export default function ZonaList() {
@@ -65,10 +60,10 @@ export default function ZonaList() {
             )}
             {zonas.map(z => {
               const items = detallePorZona[z.zona_id] ?? []
-              const count = items.length
+              const activos = z.sensores_activos ?? items.length
               return (
-                <>
-                  <tr key={z.zona_id}>
+                <Fragment key={z.zona_id}>
+                  <tr>
                     <td>{z.zona_id}</td>
                     <td><strong>{z.nombre}</strong></td>
                     <td>{z.descripcion ?? '—'}</td>
@@ -79,8 +74,8 @@ export default function ZonaList() {
                       </span>
                     </td>
                     <td>
-                      {count > 0
-                        ? <span className="badge badge-activo">{count} activo{count !== 1 ? 's' : ''}</span>
+                      {activos > 0
+                        ? <span className="badge badge-activo">{activos} activo{activos !== 1 ? 's' : ''}</span>
                         : <span className="badge badge-inactivo">0 activos</span>
                       }
                     </td>
@@ -88,15 +83,15 @@ export default function ZonaList() {
                       <button
                         className="btn btn-ghost btn-sm"
                         onClick={() => toggle(z.zona_id)}
-                        disabled={count === 0}
+                        disabled={items.length === 0}
                       >
                         {expandido === z.zona_id ? 'Ocultar' : 'Ver detalle'}
                       </button>
                     </td>
                   </tr>
 
-                  {expandido === z.zona_id && count > 0 && (
-                    <tr key={`det-${z.zona_id}`} className="zone-row">
+                  {expandido === z.zona_id && items.length > 0 && (
+                    <tr className="zone-row">
                       <td colSpan={7} style={{ padding: '12px 16px' }}>
                         <table className="inner-table">
                           <thead>
@@ -104,14 +99,14 @@ export default function ZonaList() {
                               <th>Sensor</th>
                               <th>Tipo sensor</th>
                               <th>Tipo lectura</th>
-                              <th>Umbral config.</th>
-                              <th>Lectura actual *</th>
+                              <th>Umbral</th>
+                              <th>Lectura actual</th>
                               <th>Estado</th>
                             </tr>
                           </thead>
                           <tbody>
                             {items.map(({ monitoreo: m, sensor: s }) => {
-                              const actual = lecturaSimulada(m.monitoreo_id, m.valor_umbral)
+                              const actual = m.lectura_actual
                               const supera = actual > m.valor_umbral
                               return (
                                 <tr key={m.monitoreo_id} className={supera ? 'row-alerta' : ''}>
@@ -137,11 +132,10 @@ export default function ZonaList() {
                             })}
                           </tbody>
                         </table>
-                        <p className="sim-note">* Lectura simulada con fines de demostración.</p>
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               )
             })}
           </tbody>

@@ -2,10 +2,6 @@ import { useEffect, useState } from 'react'
 import { getMonitoreos, getSensores } from '../api/api'
 import ActualizarMonitoreoForm from './ActualizarMonitoreoForm'
 
-function lecturaSimulada(id, umbral) {
-  return +( umbral * (0.55 + (id * 17 % 90) / 100) ).toFixed(2)
-}
-
 export default function MonitoreoList({ refresh }) {
   const [monitoreos, setMonitoreos] = useState([])
   const [sensoresMap, setSensoresMap] = useState({})
@@ -60,8 +56,8 @@ export default function MonitoreoList({ refresh }) {
                     <th>Sensor</th>
                     <th>Zona</th>
                     <th>Tipo lectura</th>
-                    <th>Umbral config.</th>
-                    <th>Lectura actual *</th>
+                    <th>Umbral</th>
+                    <th>Lectura actual</th>
                     <th>Instalación</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -75,7 +71,7 @@ export default function MonitoreoList({ refresh }) {
                   )}
                   {monitoreos.map(m => {
                     const sensor = sensoresMap[m.sensor_id]
-                    const actual = lecturaSimulada(m.monitoreo_id, m.valor_umbral)
+                    const actual = m.lectura_actual
                     const supera = actual > m.valor_umbral
 
                     return (
@@ -128,7 +124,7 @@ export default function MonitoreoList({ refresh }) {
               </table>
             </div>
           </div>
-          <p className="sim-note">* Lectura simulada con fines de demostración.</p>
+          <p className="sim-note">* Lectura calculada por el servidor en base al umbral configurado.</p>
         </>
       )}
     </div>
