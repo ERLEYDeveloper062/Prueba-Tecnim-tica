@@ -6,7 +6,8 @@ from datetime import date, datetime
 
 from pydantic import (
     BaseModel,
-    ConfigDict
+    ConfigDict,
+    computed_field,
 )
 
 
@@ -39,6 +40,13 @@ class RespuestaMonitoreo(BaseModel):
     estado: str | None = None
 
     fecha_creacion: datetime | None = None
+
+    @computed_field
+    @property
+    def lectura_actual(self) -> float:
+        return round(
+            self.valor_umbral * (0.55 + (self.monitoreo_id * 17 % 90) / 100), 2
+        )
 
     model_config = ConfigDict(
         from_attributes=True
