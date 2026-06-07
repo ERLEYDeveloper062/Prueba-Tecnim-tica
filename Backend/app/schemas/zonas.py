@@ -29,3 +29,7 @@ class RespuestaZona(ZonaBase):
     model_config = ConfigDict(
         from_attributes=True
     )
+
+
+class RespuestaZonaConActivos(RespuestaZona):
+    sensores_activos: int = 0

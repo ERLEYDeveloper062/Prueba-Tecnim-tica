@@ -7,7 +7,7 @@ from supabase import Client
 
 from app.database import get_client
 from app.schemas.sensores import RespuestaSensor
-from app.schemas.zonas import RespuestaZona
+from app.schemas.zonas import RespuestaZona, RespuestaZonaConActivos
 from app.services import zonas as zona_service
 
 
@@ -19,13 +19,13 @@ router = APIRouter(
 
 @router.get(
     "/",
-    response_model=list[RespuestaZona]
+    response_model=list[RespuestaZonaConActivos]
 )
 def obtener_zonas(
     client: Client = Depends(get_client)
 ):
-    """Lista todas las zonas."""
-    return zona_service.obtener_todas(client)
+    """Lista todas las zonas con conteo de sensores activos."""
+    return zona_service.obtener_todas_con_activos(client)
 
 
 @router.get(

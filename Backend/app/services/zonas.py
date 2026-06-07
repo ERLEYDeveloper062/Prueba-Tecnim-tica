@@ -12,6 +12,10 @@ def obtener_todas(client: Client):
     return zona_repository.obtener_todas(client)
 
 
+def obtener_todas_con_activos(client: Client):
+    return zona_repository.obtener_todas_con_activos(client)
+
+
 def obtener_por_id(zona_id: int, client: Client):
     zona = zona_repository.obtener_por_id(zona_id, client)
     if not zona:
