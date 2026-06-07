@@ -184,3 +184,43 @@ tbody tr:hover { background: #f8fafc; }
 .inline-form { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .inline-form input,
 .inline-form select { padding: 5px 9px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: .88rem; }
+
+/* ─── Tabla interior (detalle de zona) ──────────────────────────────────────── */
+.inner-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+.inner-table th {
+  background: #eff6ff;
+  padding: 8px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #1d4ed8;
+  border-bottom: 1px solid #bfdbfe;
+}
+.inner-table td { padding: 8px 12px; border-bottom: 1px solid #e0f2fe; vertical-align: middle; }
+.inner-table tr:last-child td { border-bottom: none; }
+
+/* ─── Fila con alerta de umbral ─────────────────────────────────────────────── */
+.row-alerta { background: #fff7ed !important; }
+.row-alerta:hover { background: #ffedd5 !important; }
+
+/* ─── Indicadores de lectura ────────────────────────────────────────────────── */
+.lectura-ok    { color: #166534; font-weight: 600; }
+.lectura-alerta { color: #9a3412; font-weight: 700; }
+
+.ok-tag    { font-size: .8rem; font-weight: 500; color: #16a34a; }
+.alerta-tag {
+  font-size: .78rem;
+  font-weight: 700;
+  color: #c2410c;
+  background: #fed7aa;
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+/* ─── Nota de simulación ─────────────────────────────────────────────────────── */
+.sim-note {
+  font-size: .78rem;
+  color: #94a3b8;
+  margin-top: 8px;
+  font-style: italic;
+}
